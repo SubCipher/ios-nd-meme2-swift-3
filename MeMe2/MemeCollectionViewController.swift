@@ -1,8 +1,8 @@
 //
 //  MemeCollectionViewController.swift
-//  MeMe1
+//  MeMe2
 //
-//  Created by knax on 3/3/17.
+//  Created by kpicart on 3/3/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.
 //
 

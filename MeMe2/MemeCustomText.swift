@@ -1,6 +1,6 @@
 //
 //  MemeCustomText.swift
-//  MeMe1
+//  MeMe2
 //
 //  Created by kpicart on 2/18/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.

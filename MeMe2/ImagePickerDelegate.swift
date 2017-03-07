@@ -1,6 +1,6 @@
 //
 //  ImagePickerDelegate.swift
-//  MeMe1
+//  MeMe2
 //
 //  Created by kpicart on 2/1/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.
