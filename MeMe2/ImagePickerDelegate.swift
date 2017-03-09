@@ -11,7 +11,7 @@ import UIKit
 
 class ImagePickerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //this is where we pick original or base image for the meme
+    //this is where we pick the original image for the meme
     
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any ]){
        

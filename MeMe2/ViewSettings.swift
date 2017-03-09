@@ -37,11 +37,10 @@ class ViewSettings: UIViewController {
         sourceImageView.image = sourceImage
     }
     
-    internal func hideNavButtons(_ navShow:Bool, topNavBar: UINavigationItem,bottomNavBar: UIToolbar, button1: UIButton, button2: UIButton){
+    internal func hideNavButtons(_ navShow:Bool,toolBar: UIToolbar, button1: UIButton, button2: UIButton){
         button1.isHidden = navShow
         button2.isHidden = navShow
-        topNavBar.accessibilityElementsHidden = navShow
-        bottomNavBar.isHidden = navShow
+        toolBar.isHidden = navShow
     }
 }
 

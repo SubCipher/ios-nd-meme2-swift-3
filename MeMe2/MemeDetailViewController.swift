@@ -1,5 +1,5 @@
 //
-//  MemeViewController.swift
+//  MemeDetailViewController.swift
 //  MeMe2
 //
 //  Created by kpicart on 2/2/17.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class MemeViewController: UIViewController {
+class MemeDetailViewController: UIViewController {
     /*getting the whole meme here...could have less code overall by using one image for segue and collection/table, but this gives more options to access entire meme dataset */
     var meme: MemeBluePrint!
     
-    //check if image is coming from segue or collection/table view to prevent nil
+    //check where the image is comming from to prevent nil
     var imageFromCollection: Bool?
     
-    //get memedImage from segue
+    //capture and display memedImage from segue
     var segueMemedImage: UIImage? {
         didSet {
             imageFromCollection = false

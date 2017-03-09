@@ -33,7 +33,7 @@ class MemeCustomText: UIViewController  {
         
         if isDeviceVertical == true {
             topCGRect = CGRect(x: 85.0, y: 100.0, width: 222.0, height: 42.0)
-            bottomCGRect = CGRect(x: 85.0, y: 250, width: 222.0, height: 42.0)
+            bottomCGRect = CGRect(x: 85.0, y: 500, width: 222.0, height: 42.0)
             
         } else {
             topCGRect =  CGRect(x: 205.0, y: 60.0, width: 222.0, height: 42.0)
@@ -45,6 +45,7 @@ class MemeCustomText: UIViewController  {
         
         return (top, bottom)
     }
+    
     
     //MARK -set text and text field attributes
     

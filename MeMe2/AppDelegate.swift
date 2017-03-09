@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  MeMe2
+//  MeMe1
 //
-//  Created by kpicart on 1/26/17.
+//  Created by knax on 1/26/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.
 //
 

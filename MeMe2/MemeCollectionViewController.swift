@@ -2,7 +2,7 @@
 //  MemeCollectionViewController.swift
 //  MeMe2
 //
-//  Created by kpicart on 3/3/17.
+//  Created by knax on 3/3/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.
 //
 
@@ -20,22 +20,20 @@ class MemeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         
-        //configure grid spacing for collection view
         let space: CGFloat = 2
         let dimensionW = (view.frame.size.width - (2 * space)) / 3.0
-        let dimensionH = (view.frame.size.height - (2 * space)) / 3.5
+        let dimensionH = (view.frame.size.height - (2 * space)) / 4.0
         
-        flowViewLayout.minimumInteritemSpacing = CGFloat(space)
+        flowViewLayout.minimumInteritemSpacing = CGFloat(0)
         flowViewLayout.minimumLineSpacing = CGFloat(space)
         flowViewLayout.itemSize = CGSize(width: dimensionW,height: dimensionH)
        }
-    
     @IBOutlet weak var noMemeView: UIView!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //if no images are in the array give some instructions on what to do
         noMemePSA()
+        collectionViewOutlet.backgroundColor = UIColor.white
         collectionViewOutlet.reloadData()
     }
     
@@ -58,13 +56,12 @@ class MemeCollectionViewController: UICollectionViewController {
         let singleCell = appDelegate.memes2[((indexPath as NSIndexPath!).row)]
         
         cell.memeImageView.image = singleCell.memedImage
-        cell.memeNameLabel?.text = singleCell.topText
-        
+               
         return cell
     }
     
     internal override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeViewController") as! MemeViewController
+        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         
         detailController.imageFromCollection = true
         detailController.meme = appDelegate.memes2[indexPath.row]

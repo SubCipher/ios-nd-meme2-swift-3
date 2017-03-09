@@ -19,8 +19,10 @@ class ScrollViewController: UIViewController, UITextFieldDelegate, UIScrollViewD
             scrollView.delegate = self
             
             //keep base image size while zooming out
-            scrollView.minimumZoomScale =  0.125
+            scrollView.minimumZoomScale =  0.05
             scrollView.maximumZoomScale = 3.0
+            
+    
         }
     }
     
@@ -37,11 +39,11 @@ class ScrollViewController: UIViewController, UITextFieldDelegate, UIScrollViewD
         
         super.viewWillAppear(animated)
         
-        //set sourceImage and add the sourceImageView to the view
+        //set parameters for sourceImage and sourceImageView
         viewSettings.setSourceImage()
         scrollView.addSubview(sourceImageView)
         
-        //offSet image Y coordinate based on frame org after zooming
-        view.frame.origin.y = -10.0
+        //offSet image placement based on superView coordinate system after zooming
+        view.frame.origin.y = -20.0
         }
     }

@@ -2,7 +2,7 @@
 //  MemeTableViewController.swift
 //  MeMe2
 //
-//  Created by kpicart on 3/6/17.
+//  Created by knax on 3/6/17.
 //  Copyright © 2017 StepwiseDesigns. All rights reserved.
 //
 
@@ -41,7 +41,7 @@ class MemeTableViewController: UITableViewController {
     }
 
     internal override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeViewController") as! MemeViewController
+        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         
         detailController.imageFromCollection = true
         detailController.meme = appDelegate.memes2[indexPath.row]
