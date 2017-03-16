@@ -17,25 +17,24 @@ class MemeCollectionViewController: UICollectionViewController {
     
     @IBOutlet weak var flowViewLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var collectionViewOutlet: UICollectionView!
-    
-    override func viewDidLoad() {
-        
-        let space: CGFloat = 2
-        let dimensionW = (view.frame.size.width - (2 * space)) / 3.0
-        let dimensionH = (view.frame.size.height - (2 * space)) / 4.0
-        
-        flowViewLayout.minimumInteritemSpacing = CGFloat(0)
-        flowViewLayout.minimumLineSpacing = CGFloat(space)
-        flowViewLayout.itemSize = CGSize(width: dimensionW,height: dimensionH)
-       }
     @IBOutlet weak var noMemeView: UIView!
     
-    override func viewWillAppear(_ animated: Bool) {
+    internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         noMemePSA()
-        collectionViewOutlet.backgroundColor = UIColor.white
+        collectionViewOutlet.backgroundColor = UIColor.blue
+        
+        let space: CGFloat = 2
+        flowViewLayout.minimumInteritemSpacing = 0
+        flowViewLayout.minimumLineSpacing = 5
+        
+        let dimensionW = (view.frame.size.width - (3 * space)) / 3.0
+        let dimensionH = (view.frame.size.height - (2 * space)) / 4.0
+        
+        flowViewLayout.itemSize = CGSize(width: dimensionW,height: dimensionH)
+        
         collectionViewOutlet.reloadData()
-    }
+       }
     
     internal func noMemePSA(){
         if appDelegate.memes2.isEmpty {
@@ -43,7 +42,6 @@ class MemeCollectionViewController: UICollectionViewController {
         } else {
             noMemeView.isHidden = true
         }
-
     }
 
     internal override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -54,7 +52,6 @@ class MemeCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
 
         let singleCell = appDelegate.memes2[((indexPath as NSIndexPath!).row)]
-        
         cell.memeImageView.image = singleCell.memedImage
                
         return cell

@@ -49,7 +49,3 @@ class MemeTableViewController: UITableViewController {
         self.navigationController!.pushViewController(detailController, animated: true)
     }
 }
-
-
-
-

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // elements for constructing meme image 
-struct MemeBluePrint {
+internal struct MemeBluePrint {
     let topText: String
     let bottomText: String
     let orgImage: UIImage
