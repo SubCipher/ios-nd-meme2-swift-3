@@ -12,14 +12,18 @@ var sourceImageView = UIImageView()
 //set the prameters for the views frame size, based on its contents
 
 var sourceImage: UIImage?{
-get{
-    return sourceImageView.image
+    get{
+        return sourceImageView.image
+    }
+    set {
+        //new properties for view
+        sourceImageView.image = newValue
+    }
 }
-set {
-    //new properties for view
-    sourceImageView.image = newValue
-}
-}
+
+var topTextField = UITextField()
+var bottomTextField = UITextField()
+
 
 class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     
@@ -31,6 +35,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
     let localImagePickerController = UIImagePickerController()
     let imagePickerDelegate = ImagePickerDelegate()
     
+   
+    
     //MARK: - Set the required IBOutlets for storyboard
     
     @IBOutlet weak var blueButtonOutlet: UIButton!
@@ -38,6 +44,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
     @IBOutlet weak var bottomNavToolBar: UIToolbar!
     @IBOutlet weak var memePhotoBarItemOutlet: UIBarButtonItem!
     @IBOutlet weak var memeCameraBarItemOutlet: UIBarButtonItem!
+    
     var scrollView = UIScrollView()
     
     //scrollView object to position/resize image
@@ -48,29 +55,41 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
+        topTextField = memeCustomRect.textFieldSettings(placeHolderText: "top")
+        bottomTextField = memeCustomRect.textFieldSettings(placeHolderText: "bottom")
+        addSubviews()
+        
         localImagePickerController.delegate = imagePickerDelegate
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MemeEditorViewController.clearMeme))
-        self.tabBarController?.tabBar.isHidden = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MemeEditorViewController.clearMeme))
+        tabBarController?.tabBar.isHidden = true
     }
+    
     
     internal override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
-        //implemented here to make sure views are layouted before displayed to user
+        //set var to dynamically capture frame size
         memeCustomRect.activeFrameSize = view.frame.size
+        
+        sourceImageView.frame = memeCustomRect.getCGRectPosition("sourceImageView")
+        //implemented here to make sure views are set before displayed to user
+       
         scrollView.delegate = self
         //hide colored buttons to get more screen space
         redButtonOutlet.isHidden = !isDeviceVertical
         blueButtonOutlet.isHidden = !isDeviceVertical
-        view.addSubview(scrollView)
-        scrollView.addSubview(sourceImageView)
-        
-        //get Rect for sourceImageView
-        sourceImageView.frame = memeCustomRect.getCGRectPosition("sourceImageView")
         
         setupScrollView()
         setUpTextField()
+    }
+    
+    
+    private func addSubviews(){
+        view.addSubview(scrollView)
+        scrollView.addSubview(sourceImageView)
+        view.addSubview(topTextField)
+        view.addSubview(bottomTextField)
+
     }
     
     internal override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -85,47 +104,40 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
     }
         
     private func setupScrollView(){
-        
+        let minZoom = CGFloat(0.05)
+        let maxZoom = CGFloat(4.0)
+
         //send current view frame to be calculated
-        let scrollViewCGRect = memeCustomRect.getCGRectPosition("scrollView")
-        scrollView.frame = scrollViewCGRect
+        scrollView.frame  = memeCustomRect.getCGRectPosition("scrollView")
         sourceImageView.contentMode = .scaleAspectFit
         
-        scrollView.minimumZoomScale = 0.01
-        scrollView.maximumZoomScale =  4.0
-        scrollView.setZoomScale( 0.5, animated: true)
-        scrollView.contentSize = CGSize(width: 1000.0, height: 1000.0)
+        scrollView.minimumZoomScale = minZoom
+        scrollView.maximumZoomScale = maxZoom
+        scrollView.setZoomScale(minZoom, animated: true)
+        scrollView.contentSize = CGSize(width: view.frame.width * maxZoom, height: view.frame.height * maxZoom)
     }
     
     // MARK: Cancel button implementation
     internal func clearMeme() {
-        
+        sourceImage = nil
         if let navigationController = self.navigationController {
             navigationController.popToRootViewController(animated: true)
         }
     }
     
     private func setUpTextField(){
+        //assign delegates
+        topTextField.delegate = self
+        bottomTextField.delegate = self
         
-        
-        //set XY position for textField rect
-        memeCustomRect.activeFrameSize = CGSize(width: view.bounds.width, height: view.bounds.height)
-        
-        //remove the existing textFields so we don't get mulitplicity of textfields
-        memeTextField.topTextField.removeFromSuperview()
-        memeTextField.bottomTextField.removeFromSuperview()
-        
-        memeCustomRect.setupMemeTextFields()
-        memeTextField.topTextField.delegate = self
-        memeTextField.bottomTextField.delegate = self
-        
-        view.addSubview(memeTextField.topTextField)
-        view.addSubview(memeTextField.bottomTextField)
+        //get CGRect based on orientation
+        topTextField.frame = memeCustomRect.getCGRectPosition("topTextField")
+        bottomTextField.frame =  memeCustomRect.getCGRectPosition("bottomTextField")
     }
     
     //MARK: - The Meme Image
     private func createMeme() -> MemeBluePrint {
-        let meme = MemeBluePrint(topText: memeTextField.topTextField.text ?? "", bottomText: memeTextField.bottomTextField.text ?? "", orgImage: sourceImageView.image ?? viewSettings.noMemeImage! , memedImage: generateMemedImage())
+        let meme = MemeBluePrint(topText: topTextField.text ?? "", bottomText: bottomTextField.text ?? "", orgImage: sourceImageView.image ?? viewSettings.noMemeImage! , memedImage: generateMemedImage())
         return meme
     }
     
@@ -175,7 +187,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
         let actionSheet = UIAlertController(title: "Image Source", message: useMessage , preferredStyle: .alert)
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(actionSheet,animated: true, completion: nil)
+        present(actionSheet,animated: true, completion: nil)
     }
     
     //MARK: - Setup buttons
@@ -238,7 +250,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
         //MARK: - Hide UI Objects
         
         //removes the keyboard to prevent cropped image, when user sends meme without exiting textField
-        self.view.endEditing(true)
+        view.endEditing(true)
         
         viewSettings.hideNavButtons(true,toolBar: bottomNavToolBar, button1: redButtonOutlet, button2: blueButtonOutlet)
         
@@ -248,7 +260,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
         
         //exclude some stuff if needed
         controller.excludedActivityTypes = [UIActivityType.addToReadingList,.openInIBooks,.print]
-        self.present(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
         
         controller.completionWithItemsHandler = { (activityType, completed,items, error) in
             guard completed else { return }
@@ -277,18 +289,18 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
     internal func keyboardWillShow(_ notification: Notification){
         
         //set parameters for when view has to move (make space for keyboard)
-        if memeTextField.bottomTextField.isEditing {
+        if bottomTextField.isEditing {
             let heightVar = !isDeviceVertical ? CGFloat(40.0) : CGFloat(10.0)
             
-            self.view.frame.origin.y = heightVar - getKeyboardHeight(notification)
+            view.frame.origin.y = heightVar - getKeyboardHeight(notification)
         } else {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
     }
     
     //return frame to original position
     internal func keyboardWillHide(_ notification: Notification){
-        self.view.frame.origin.y = 0
+        view.frame.origin.y = 0
     }
     
     private func getKeyboardHeight(_ notification: Notification)-> CGFloat {
@@ -309,7 +321,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UINavigat
         
         //remove form notification after editing textField
         unsubscribeFromKeyboardNotifications()
-        //unsubscribeFromKeyboardNotificationsWillHide()
     }
     
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {

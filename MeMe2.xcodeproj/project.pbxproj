@@ -93,9 +93,8 @@
 		20CB8C291E3A652400E55F10 = {
 			isa = PBXGroup;
 			children = (
-				20CB8C341E3A652400E55F10 /* MeMe2 */,
 				20CB8C331E3A652400E55F10 /* Products */,
-				20CB8C391E3A652400E55F10 /* Main.storyboard */,
+				20CB8C341E3A652400E55F10 /* MeMe2 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +114,7 @@
 				20DB55FA1E6A958A006F84BC /* collectionViews */,
 				201AF7EC1E6D9C1800ABC650 /* tableView */,
 				203687841E57B6B6005473C8 /* viewControllers */,
+				20CB8C391E3A652400E55F10 /* Main.storyboard */,
 			);
 			path = MeMe2;
 			sourceTree = "<group>";
@@ -223,7 +223,6 @@
 				20CB8C3A1E3A652400E55F10 /* Base */,
 			);
 			name = Main.storyboard;
-			path = MeMe2;
 			sourceTree = "<group>";
 		};
 		20CB8C3E1E3A652400E55F10 /* LaunchScreen.storyboard */ = {

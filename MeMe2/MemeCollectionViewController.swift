@@ -22,19 +22,9 @@ class MemeCollectionViewController: UICollectionViewController {
     internal override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         noMemePSA()
-        collectionViewOutlet.backgroundColor = UIColor.blue
-        
-        let space: CGFloat = 2
-        flowViewLayout.minimumInteritemSpacing = 0
-        flowViewLayout.minimumLineSpacing = 5
-        
-        let dimensionW = (view.frame.size.width - (3 * space)) / 3.0
-        let dimensionH = (view.frame.size.height - (2 * space)) / 4.0
-        
-        flowViewLayout.itemSize = CGSize(width: dimensionW,height: dimensionH)
-        
+       collectionViewOutlet.backgroundColor = UIColor.cyan
         collectionViewOutlet.reloadData()
-       }
+    }
     
     internal func noMemePSA(){
         if appDelegate.memes2.isEmpty {
@@ -43,7 +33,7 @@ class MemeCollectionViewController: UICollectionViewController {
             noMemeView.isHidden = true
         }
     }
-
+    
     internal override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return appDelegate.memes2.count
     }
@@ -63,6 +53,7 @@ class MemeCollectionViewController: UICollectionViewController {
         detailController.imageFromCollection = true
         detailController.meme = appDelegate.memes2[indexPath.row]
         
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
     }
-}
+    
+    }

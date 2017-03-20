@@ -12,7 +12,7 @@ class MemeTableViewController: UITableViewController {
     
    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
 // MARK: - Table view data source
@@ -46,6 +46,6 @@ class MemeTableViewController: UITableViewController {
         detailController.imageFromCollection = true
         detailController.meme = appDelegate.memes2[indexPath.row]
         
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
     }
 }
