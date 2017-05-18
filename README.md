@@ -1,7 +1,6 @@
 # Camera/Photo App
 
 ## ios-nd-meme2-swift-3
+![mememe2](https://cloud.githubusercontent.com/assets/12479502/26181334/402e9446-3b3d-11e7-819c-416c97adf717.png)
 
-![mememe](https://cloud.githubusercontent.com/assets/12479502/26091099/0ff3b43a-39d7-11e7-89ca-1ab8e2684984.png)
-
-app that takes pictures and overlays attributed text to make customized memes out of existing photos or new photos . The networked aspect of the app allows the meme to be shared with others via social media or email. Saved meme's are cataloged using table and collection views.
+Successfully implemented delegate patterns, UIScrollView, UITableView, UICollectionView and UIImagePickerController, in app to allow a user to make memes out of friends, family, or pets. Also allows sharing with others via social media or email.
